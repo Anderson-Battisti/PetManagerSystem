@@ -1,11 +1,15 @@
 import { Route, Routes } from "react-router-dom";
 import { LoginScreen } from "./screens/LoginScreen";
+import { ThemeProvider } from "styled-components";
+import { defaultTheme } from "./styles/theme/DefaultTheme";
 
 export function Router()
 {
     return (
-        <Routes>
-            <Route path="/" element={ <LoginScreen/> } />
-        </Routes>
+        <ThemeProvider theme={ defaultTheme }>
+            <Routes>
+                <Route path="/" element={ <LoginScreen/> } />
+            </Routes>
+        </ThemeProvider>
     )
 }
