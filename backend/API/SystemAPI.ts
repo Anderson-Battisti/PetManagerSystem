@@ -1,6 +1,6 @@
 import express, { Express } from "express";
 import cors from "cors";
-import { loginRoute } from "./LoginRoute";
+import { authRoute } from "../middlewares/authMiddleware";
 
 let server: Express = express();
 
@@ -8,7 +8,7 @@ const serverPort: number = 9000;
 
 server.use( cors() );
 server.use( express.json() );
-server.use( loginRoute );
+server.use( authRoute );
 
 server.listen( serverPort, () => 
 {
