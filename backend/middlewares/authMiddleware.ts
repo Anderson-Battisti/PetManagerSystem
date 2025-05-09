@@ -9,9 +9,7 @@ authRoute.use( async ( req: Request, res: Response, next: NextFunction ) =>
 
     if ( authorization )
     {
-        let successfulAuthentication: boolean = await UserService.authenticate( authorization, req, res );
-        
-        if ( successfulAuthentication )
+        if ( await UserService.authenticate( authorization, req, res ) )
         {
             next();
             return;
@@ -20,7 +18,13 @@ authRoute.use( async ( req: Request, res: Response, next: NextFunction ) =>
         else
         {
             res.status( 401 )
-               .json( { "error": "Authentication failed! Database hasn't returned any user with this credentials" } );
+               .json( { "error": "Authentication failed! Invalid credentials or inactive user" } );
         }
+    }
+
+    else
+    {
+        res.status( 401 )
+           .json( { "error": "Authorization header is missing or malformed." } );
     }
 } );

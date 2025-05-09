@@ -4,6 +4,7 @@ class User
     name:     string;
     email:    string;
     password: string;
+    active:   boolean;
 
     public setName( name: string ): void
     {
