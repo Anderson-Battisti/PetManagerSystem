@@ -1,5 +1,6 @@
 import { fetchData } from "../../database/database";
 import { USERS_COLUMNS, USERS_TABLE } from "../../database/constants/users";
+import { User } from "../models/User";
 
 export class UserRepository
 {
