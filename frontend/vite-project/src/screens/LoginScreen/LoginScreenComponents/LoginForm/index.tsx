@@ -1,11 +1,18 @@
 import { useState } from "react";
 import { FormContainer, LoginButton, LoginField, LoginLabel, PasswordField, PasswordLabel } from "./styles";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-export function LoginForm()
+type LoginFormProps =
 {
-    const [ email,    setEmail ]    = useState<string>( "" );
-    const [ password, setPassword ] = useState<string>( "" ); 
+    setErrorMessage: ( message: string ) => void;
+}
+export function LoginForm( { setErrorMessage }: LoginFormProps )
+{
+    const [ email,        setEmail        ] = useState<string>( "" );
+    const [ password,     setPassword     ] = useState<string>( "" ); 
+    
+    const navigate = useNavigate();
 
     const handleSubmit = async ( e: React.FormEvent ) =>
     {
@@ -17,41 +24,63 @@ export function LoginForm()
 
         try
         {
-            const response = await axios.post( "http://localhost:9000/",
-                                                {},
+            const response = await axios.get( "http://localhost:9000/checkLogin",
                                                 {
                                                     headers:
                                                     {
                                                         Authorization: `Basic ${base64Credentials}`
                                                     } 
                                                 } );
-            
-            console.log( "Login success: " + response.data );
+            if ( response.status === 200 )
+            {
+                navigate( "/home" );
+                console.log( "Login success: " + response.data );
+            }
+
+            else
+            {
+                alert( "Login failed. Try again." );
+            }
         }
 
-        catch ( error )
+        catch ( error: any )
         {
+            if ( error.response.status === 401 )
+            {
+                setErrorMessage( "E-mail ou senha inválidos." );
+            }
+
+            else
+            {
+                setErrorMessage( "Erro ao tentar efetuar login. Tente novamente mais tarde." );
+            }
+
             console.log( "Login error: " + error );
         }
     };
 
     return(
         <FormContainer as = "form" onSubmit = { handleSubmit } >
+            
             <LoginLabel>E-mail:</LoginLabel>
+            
             <LoginField 
                 placeholder = "E-mail"
                 type        = "text"
                 value       = { email }
                 onChange    = { ( e ) => setEmail( e.target.value ) } />
             <PasswordLabel>Senha:</PasswordLabel>
+            
             <PasswordField 
                 placeholder = "Senha"
                 type        = "password"
                 value       = { password }
                 onChange    = { ( e ) => setPassword( e.target.value ) } />
+            
             <LoginButton 
                 type = "submit" >Entrar
             </LoginButton>
+
         </FormContainer>
     );
 }

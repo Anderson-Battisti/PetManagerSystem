@@ -28,3 +28,11 @@ authRoute.use( async ( req: Request, res: Response, next: NextFunction ) =>
            .json( { "error": "Authorization header is missing or malformed." } );
     }
 } );
+
+authRoute.get( "/checkLogin", ( req: Request, res: Response ) =>
+{
+    res.status( 200 )
+              .json( { success: true, message: "User and password matched. Login successful." } );
+    
+    return;
+} );
