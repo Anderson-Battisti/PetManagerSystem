@@ -7,10 +7,14 @@ export function Router()
 {
     return (
         <ThemeProvider theme={ defaultTheme }>
+
             <Routes>
+
                 <Route path="/" element={ <LoginScreen/> } />
                 <Route path="/home" />
+                
             </Routes>
+
         </ThemeProvider>
     )
 }
