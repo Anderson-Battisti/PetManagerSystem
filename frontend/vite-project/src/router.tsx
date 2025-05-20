@@ -2,6 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import { LoginScreen } from "./screens/LoginScreen";
 import { ThemeProvider } from "styled-components";
 import { defaultTheme } from "./styles/theme/DefaultTheme";
+import React from "react";
+import { DefaultLayout } from "./layout/DefaultLayout";
 
 export function Router()
 {
@@ -11,7 +13,12 @@ export function Router()
             <Routes>
 
                 <Route path="/" element={ <LoginScreen/> } />
-                <Route path="/home" />
+
+                <Route element = { <DefaultLayout /> } >
+
+                    <Route path="/home" />
+                    
+                </Route>
                 
             </Routes>
 
