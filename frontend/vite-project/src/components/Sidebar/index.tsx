@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { SidebarContainer, SidebarItem, SidebarList, StyledNavLink, ToggleButton } from "./styles";
+import arrowRightIcon from "../../assets/icons/arrow-narrow-right-svgrepo-com.svg";
+import arrowLeftIcon  from "../../assets/icons/arrow-narrow-left-svgrepo-com.svg";
 
 export function Sidebar()
 {
@@ -7,9 +9,11 @@ export function Sidebar()
 
     return (
 
-        <SidebarContainer isCollapsed = { isCollapsed } >
+        <SidebarContainer $isCollapsed = { isCollapsed } >
 
-            <ToggleButton onClick = { () => setIsCollapsed( ! isCollapsed ) } > { isCollapsed ? "→" : "←" } </ToggleButton>
+            <ToggleButton src     = { isCollapsed ? arrowRightIcon : arrowLeftIcon } 
+                          onClick = { () => setIsCollapsed( ! isCollapsed ) }  
+                          style   = { { width: '34px', height: '24px' } } />
 
             <SidebarList>
 
